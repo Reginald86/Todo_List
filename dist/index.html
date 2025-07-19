@@ -1,14 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"><head><script defer src="main.js"></script></head>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width='device-width', initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-<script defer src="main.js"></script></head>
 <body>
-  <div id = "nav"></div>
-  <div id = "dashboard"></div>
-  <div id = "header"></div>
-  <div id = "todoBody"></div>
+
+    <dialog id ="dialog" class="modal-dialog">
+        <form method="dialog" id="form">
+            <label for = "name">Name</label>
+            <input type ="text" id = "name" name = "name" value="Reginald" required></input>
+            <label for = "date">Date</label>
+            <input type = "date" id = "date" name = "date" required></input>
+            <label for = "description">Description</label>
+            <textarea id="description" name="description" value ="Reginald & Bette" required></textarea>
+            <button id = "cancelBtn">Cancel</button>
+            <button id = "submitBtn">Submit</button>
+        </form>
+    </dialog>
+
+    <dialog id ="projectDialog" class="modal-dialog">
+        <form method="dialog" id="projectForm">
+            <label for = "projectName">Name</label>
+            <input type ="text" id = "projectName" name = "projectName" required></input>
+            <label for = "projectDescription">Description</label>
+            <textarea id="projectDescription" name="projectDescription" required></textarea>
+            <button id = "projectCancelBtn">Cancel</button>
+            <button id = "projectSubmitBtn">Submit</button>
+        </form>
+    </dialog>
+
+    <div id = "dashboard">
+        <button id = "openBtn">New Task</button>
+        <button id = "projectOpenBtn">New Project</button>
+        
+    </div>
+
+    <div id = "todoContainer">
+
+    </div>
+   
 </body>
 </html>

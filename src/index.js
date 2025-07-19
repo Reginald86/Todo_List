@@ -1,4 +1,17 @@
 import "./styles.css";
-import {greeting} from "./dog.js";
+import { dialogInput} from "./createList.js";
+import { projectDialogInput } from "./createProject.js";
+import { openingProject } from "./dom.js";
 
-console.log(greeting);
+
+
+document.addEventListener("DOMContentLoaded", () =>{
+    dialogInput();
+    projectDialogInput();
+    openingProject();
+});
+
+
+
+
+
