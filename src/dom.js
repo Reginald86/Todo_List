@@ -1,3 +1,4 @@
+import { CreateTodo } from "./createList";
 import { CreateProject } from "./createProject";
 import projectopen from "./images/projectopen.svg"; 
 
@@ -71,12 +72,18 @@ export function addProject(project) {
 
 
 export let currentProject; 
-export function openingProject() {
+
+export function openingProjectTask() {
    let firstProject = new CreateProject("Project 1", "First Project");
    firstProject.id = `project-${projectCount}`;
    addProject(firstProject);
    currentProject = firstProject;
    console.log(currentProject)
+    let firstTask = new CreateTodo("Walk the Dog", "09-01-2025", "You know what happens if you don't")
+    if (currentProject) {
+      currentProject.projectTodos.push(firstTask); 
+      renderTodoList(currentProject.projectTodos); 
+    }
 }
 
 
