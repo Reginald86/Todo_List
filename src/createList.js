@@ -1,4 +1,4 @@
-import { renderTodoList, resetInputs, currentProject } from "./dom.js";
+import { renderTodoList, resetInputs, state } from "./dom.js";
 
 export function CreateTodo(name, date, description) {
   this.name = name;
@@ -25,9 +25,9 @@ export function dialogInput() {
     const todo = new CreateTodo(name.value, date.value, description.value);
     console.log("Adding todo:", todo);
 
-    if (currentProject) {
-      currentProject.projectTodos.push(todo); 
-      renderTodoList(currentProject.projectTodos); 
+    if (state.currentProject) {
+      state.currentProject.projectTodos.push(todo); 
+      renderTodoList(state.currentProject.projectTodos); 
     }
 
     resetInputs(name, date, description);

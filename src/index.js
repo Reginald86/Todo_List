@@ -6,9 +6,9 @@ import { openingProjectTask } from "./dom.js";
 
 
 document.addEventListener("DOMContentLoaded", () =>{
+    openingProjectTask();
     dialogInput();
     projectDialogInput();
-    openingProjectTask();
 });
 
 

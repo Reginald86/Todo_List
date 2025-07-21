@@ -1,6 +1,6 @@
 import { CreateTodo } from "./createList";
 import { CreateProject } from "./createProject";
-import projectopen from "./images/projectopen.svg"; 
+
 
 
 
@@ -11,6 +11,11 @@ export function resetInputs(...elements) {
 
 
 let todoCount = 0;
+let projectCount = 1;
+export let projectArray = [];
+export let state = {
+  currentProject: null,
+};
 
 export function renderTodoList (todo){
     const todoContainer = document.getElementById("todoContainer");
@@ -23,66 +28,89 @@ export function renderTodoList (todo){
     todoIndividual.className = "todoIndividual";
   
     todoCount++;
+
+    let todoName = document.createElement("h2");
+    todoName.className = "todoName"
+    todoIndividual.append(todoName)
+    todoName.textContent = todo.name;
+    let todoDate = document.createElement("p");
+    todoDate.className = "todoDate"
+    todoIndividual.append(todoDate)
+     todoDate.textContent = todo.date;
+    let todoDescription = document.createElement("p");
+    todoName.className = "todoDescription"
+    todoIndividual.append(todoDescription)
+    todoDescription.textContent = todo.description;
     
-    todoIndividual.innerHTML = `
-    <p><strong>${todo.name}</strong></p>
-    <p>${todo.date}</p>
-    <p>${todo.description}</p>
-`;
+
     todoContainer.append(todoIndividual);
     })
 }
 
 
-let projectCount = 1;
-export let projectArray = [];
+
+
 
 export function addProject(project) {
-  const dashboard = document.getElementById("dashboard");
 
+  const dashboard = document.getElementById("dashboard");
   const projectElement = document.createElement("div");
   projectElement.className = "project-card";
   projectElement.id = `project-${projectCount}`;
- projectElement.innerHTML = `
-  <h3>${project.name}</h3>
-  <p>${project.description}</p>
-  <button class="selectProjectBtn">
-    <svg class="btn-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-      <path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="currentColor" />
-    </svg>
-  </button>
-`;
+  
+  let nameProject = document.createElement("h2");
+  nameProject.className = "nameProject";
+  projectElement.append(nameProject);
+  nameProject.textContent = project.name;
+  let descriptionProject = document.createElement("p");
+  descriptionProject.className = "descriptionProject";
+  projectElement.append(descriptionProject);
+  descriptionProject.textContent = project.description;
+
+const selectProjectBtn = document.createElement("button");
+selectProjectBtn.className = "selectProjectBtn";
+
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+svg.setAttribute("class", "btn-icon");
+svg.setAttribute("viewBox", "0 0 1024 1024");
+svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+
+const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+path.setAttribute("d", "M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z");
+path.setAttribute("fill", "currentColor");
+
+svg.appendChild(path);
+selectProjectBtn.appendChild(svg);
+projectElement.appendChild(selectProjectBtn);
 
 
-  dashboard.append(projectElement);
+dashboard.append(projectElement);
 
-  const selectProjectBtn = projectElement.querySelector(".selectProjectBtn");
-  selectProjectBtn.addEventListener("click", () => {
-    currentProject = project;
-    console.log("Current project set to:", currentProject);
-    renderTodoList(currentProject.projectTodos); 
+  
+selectProjectBtn.addEventListener("click", () => {
+    state.currentProject = project;
+    console.log("Current project set to:", state.currentProject);
+    renderTodoList(state.currentProject.projectTodos); 
   });
 
   projectArray.push(projectElement.id);
   projectCount++;
   console.log(projectArray);
+
 }
 
 
-
-
-export let currentProject; 
 
 export function openingProjectTask() {
    let firstProject = new CreateProject("Project 1", "First Project");
    firstProject.id = `project-${projectCount}`;
    addProject(firstProject);
-   currentProject = firstProject;
-   console.log(currentProject)
+   state.currentProject = firstProject;
+   console.log(state.currentProject)
     let firstTask = new CreateTodo("Walk the Dog", "09-01-2025", "You know what happens if you don't")
-    if (currentProject) {
-      currentProject.projectTodos.push(firstTask); 
-      renderTodoList(currentProject.projectTodos); 
+    if (state.currentProject) {
+      state.currentProject.projectTodos.push(firstTask); 
+      renderTodoList(state.currentProject.projectTodos); 
     }
 }
 
