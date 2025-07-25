@@ -1,8 +1,9 @@
-import { addProject, resetInputs } from "./dom.js";
+import { addProject, renderTodoList, resetInputs, state } from "./dom.js";
 
 
 export function CreateProject (name, description){
     this.name = name;
+    this.id = `${name}-${Date.now()}`
     this.description = description;
     this.projectTodos = [];
 }
@@ -28,8 +29,9 @@ projectOpenBtn.addEventListener('click', () => {
             
             resetInputs(projectName, projectDescription)
             projectDialog.close();
-
+            state.currentProject = project;
             addProject(project);
+            renderTodoList(state.currentProject.projectTodos)
     });
 
       projectCancelBtn.addEventListener('click', () => {

@@ -3,19 +3,15 @@ import { CreateProject } from "./createProject";
 
 
 
-
-
 export function resetInputs(...elements) {
   elements.forEach(el => el.value = "");
 }
 
 
-let todoCount = 0;
-let projectCount = 1;
-export let projectArray = [];
 export let state = {
   currentProject: null,
 };
+
 
 export function renderTodoList (todo){
     const todoContainer = document.getElementById("todoContainer");
@@ -27,7 +23,6 @@ export function renderTodoList (todo){
     todoIndividual.id = `todo-${index}`;
     todoIndividual.className = "todoIndividual";
   
-    todoCount++;
 
     let todoName = document.createElement("h2");
     todoName.className = "todoName"
@@ -38,7 +33,7 @@ export function renderTodoList (todo){
     todoIndividual.append(todoDate)
      todoDate.textContent = todo.date;
     let todoDescription = document.createElement("p");
-    todoName.className = "todoDescription"
+    todoDescription.className = "todoDescription"
     todoIndividual.append(todoDescription)
     todoDescription.textContent = todo.description;
     
@@ -49,15 +44,18 @@ export function renderTodoList (todo){
 
 
 
-
+let projectArray = [];
 
 export function addProject(project) {
 
   const dashboard = document.getElementById("dashboard");
-  const projectElement = document.createElement("div");
-  projectElement.className = "project-card";
-  projectElement.id = `project-${projectCount}`;
+ 
   
+    const projectElement = document.createElement("div");
+    projectElement.id = `${project.name}-${project.id}`;
+    projectElement.className = "project-card";
+
+      
   let nameProject = document.createElement("h2");
   nameProject.className = "nameProject";
   projectElement.append(nameProject);
@@ -93,25 +91,24 @@ selectProjectBtn.addEventListener("click", () => {
     renderTodoList(state.currentProject.projectTodos); 
   });
 
-  projectArray.push(projectElement.id);
-  projectCount++;
-  console.log(projectArray);
+  projectArray.push(project);
+  console.log(project.id)
 
 }
 
 
 
 export function openingProjectTask() {
-   let firstProject = new CreateProject("Project 1", "First Project");
-   firstProject.id = `project-${projectCount}`;
-   addProject(firstProject);
-   state.currentProject = firstProject;
-   console.log(state.currentProject)
-    let firstTask = new CreateTodo("Walk the Dog", "09-01-2025", "You know what happens if you don't")
-    if (state.currentProject) {
-      state.currentProject.projectTodos.push(firstTask); 
-      renderTodoList(state.currentProject.projectTodos); 
-    }
+  const firstProject = new CreateProject("Project 1", "First Project");
+  firstProject.projectTodos = []; 
+  addProject(firstProject);
+
+  state.currentProject = firstProject;
+
+  const firstTask = new CreateTodo("Walk the Dog", "09-01-2025", "You know what happens if you don't");
+  state.currentProject.projectTodos.push(firstTask);
+
+  renderTodoList(state.currentProject.projectTodos);
 }
 
 
