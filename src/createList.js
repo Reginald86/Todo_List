@@ -1,4 +1,4 @@
-import { renderTodoList, resetInputs, state } from "./dom.js";
+import { renderTodoList, resetInputs, state, projectArray } from "./dom.js";
 
 export function CreateTodo(name, date, description) {
   this.name = name;
@@ -16,7 +16,12 @@ export function dialogInput() {
   const form = document.getElementById("form");
 
   openBtn.addEventListener("click", () => {
+    if(projectArray.length === 0){
+      alert("Add a new project first.")
+      openBtn.removeEventListener("click", dialogInput);
+    } else {
     dialog.showModal();
+    }
   });
 
   form.addEventListener("submit", (e) => {

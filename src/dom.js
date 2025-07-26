@@ -44,7 +44,7 @@ export function renderTodoList (todo){
 
 
 
-let projectArray = [];
+export let projectArray = [];
 
 export function addProject(project) {
 
@@ -68,6 +68,10 @@ export function addProject(project) {
 const selectProjectBtn = document.createElement("button");
 selectProjectBtn.className = "selectProjectBtn";
 
+const deleteProjectBtn =  document.createElement("button");
+deleteProjectBtn.className = "deleteProjectBtn";
+deleteProjectBtn.textContent = "Delete";
+
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 svg.setAttribute("class", "btn-icon");
 svg.setAttribute("viewBox", "0 0 1024 1024");
@@ -81,6 +85,8 @@ svg.appendChild(path);
 selectProjectBtn.appendChild(svg);
 projectElement.appendChild(selectProjectBtn);
 
+projectElement.appendChild(deleteProjectBtn)
+
 
 dashboard.append(projectElement);
 
@@ -89,6 +95,28 @@ selectProjectBtn.addEventListener("click", () => {
     state.currentProject = project;
     console.log("Current project set to:", state.currentProject);
     renderTodoList(state.currentProject.projectTodos); 
+  });
+
+  deleteProjectBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to delete this project?")) {
+
+    projectElement.remove();
+    const index = projectArray.indexOf(project);
+
+    if (index !== -1) {
+      projectArray.splice(index, 1);
+        }
+
+      if (state.currentProject === project) {
+      const fallbackProject = projectArray[index - 1] || projectArray[index + 1] || null;
+      state.currentProject = fallbackProject;
+      if (fallbackProject) {
+        renderTodoList(fallbackProject.projectTodos);
+      } else {
+        renderTodoList([]);
+      }
+    }
+  }
   });
 
   projectArray.push(project);
