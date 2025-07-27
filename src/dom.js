@@ -1,5 +1,6 @@
 import { CreateTodo } from "./createList";
 import { CreateProject } from "./createProject";
+import { storeProjects } from "./storage";
 
 
 
@@ -39,6 +40,7 @@ export function renderTodoList (todo){
     
 
     todoContainer.append(todoIndividual);
+    storeProjects();
     })
 }
 
@@ -90,6 +92,7 @@ projectElement.appendChild(deleteProjectBtn)
 
 dashboard.append(projectElement);
 
+
   
 selectProjectBtn.addEventListener("click", () => {
     state.currentProject = project;
@@ -105,7 +108,12 @@ selectProjectBtn.addEventListener("click", () => {
 
     if (index !== -1) {
       projectArray.splice(index, 1);
+      console.log("Current projectArray:", projectArray);
+console.log("Project to delete:", project);
+console.log(projectArray)
+storeProjects();
         }
+        
 
       if (state.currentProject === project) {
       const fallbackProject = projectArray[index - 1] || projectArray[index + 1] || null;
@@ -120,23 +128,27 @@ selectProjectBtn.addEventListener("click", () => {
   });
 
   projectArray.push(project);
-  console.log(project.id)
-
+  console.log(projectArray);
+  storeProjects()
+ 
 }
 
 
 
 export function openingProjectTask() {
+
   const firstProject = new CreateProject("Project 1", "First Project");
   firstProject.projectTodos = []; 
   addProject(firstProject);
-
   state.currentProject = firstProject;
+  console.log(projectArray)
+
 
   const firstTask = new CreateTodo("Walk the Dog", "09-01-2025", "You know what happens if you don't");
-  state.currentProject.projectTodos.push(firstTask);
+  firstProject.projectTodos.push(firstTask);
 
-  renderTodoList(state.currentProject.projectTodos);
+  renderTodoList(firstProject.projectTodos);
+  
 }
 
 

@@ -1,4 +1,5 @@
 import { renderTodoList, resetInputs, state, projectArray } from "./dom.js";
+import { storeProjects } from "./storage.js";
 
 export function CreateTodo(name, date, description) {
   this.name = name;
@@ -43,4 +44,5 @@ export function dialogInput() {
     dialog.close();
     resetInputs(name, date, description);
   });
+
 }

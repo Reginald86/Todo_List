@@ -1,4 +1,5 @@
 import { addProject, renderTodoList, resetInputs, state } from "./dom.js";
+import { storeProjects } from "./storage.js";
 
 
 export function CreateProject (name, description){
@@ -32,10 +33,13 @@ projectOpenBtn.addEventListener('click', () => {
             state.currentProject = project;
             addProject(project);
             renderTodoList(state.currentProject.projectTodos)
+            storeProjects();
+           
     });
 
       projectCancelBtn.addEventListener('click', () => {
         projectDialog.close(); 
         resetInputs(projectName, projectDescription)
     });
+
 }
